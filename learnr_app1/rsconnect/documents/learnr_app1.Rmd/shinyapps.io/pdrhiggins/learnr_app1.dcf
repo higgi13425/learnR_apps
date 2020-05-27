@@ -5,8 +5,8 @@ account: pdrhiggins
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2364736
-bundleId: 3195988
+bundleId: 3196007
 url: https://pdrhiggins.shinyapps.io/learnr_app1/
-when: 1590592005.26712
+when: 1590592259.78618
 asMultiple: FALSE
 asStatic: FALSE
