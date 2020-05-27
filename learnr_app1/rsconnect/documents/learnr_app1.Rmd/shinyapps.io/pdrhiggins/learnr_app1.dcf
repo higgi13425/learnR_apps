@@ -1,0 +1,12 @@
+name: learnr_app1
+title: learnr_app1
+username:
+account: pdrhiggins
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2364736
+bundleId: 3195800
+url: https://pdrhiggins.shinyapps.io/learnr_app1/
+when: 1590589766.96846
+asMultiple: FALSE
+asStatic: FALSE
