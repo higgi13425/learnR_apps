@@ -1,5 +1,4 @@
 ---
-title: " "
 output: 
 html_document:
   includes:
@@ -13,16 +12,9 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-### Exercise 
-
 ```{r ttest1, exercise=TRUE, error = TRUE}
 mtcars %>% 
   t.test(cont_var ~ group_var, data = .)
-```
-
-```{r ttest1-hint}
-mtcars %>% 
-  t.test(mpg ~ group_var, data = .)
 ```
 
 ```{r ttest1-solution}
