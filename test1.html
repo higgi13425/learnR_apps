@@ -11,7 +11,7 @@
 // Add padding to learnr body when popover shown
   $(document).on("shown.bs.popover", function() {
   	var popoverHeight = document.querySelector(".popover").offsetHeight
-  	document.body.style.paddingTop = 60 + "px"
+  	document.body.style.paddingTop = popoverHeight + 12 + "px"
   })
 
 // Set padding to 0 when popover hidden
