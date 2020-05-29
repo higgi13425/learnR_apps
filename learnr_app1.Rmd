@@ -13,13 +13,17 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r ttest1, exercise=TRUE, error = TRUE}
+library(tidyverse)
 mtcars %>% 
   t.test(cont_var ~ group_var, data = .)
 ```
 
 ```{r ttest1-solution}
+library(tidyverse)
 mtcars %>% 
   t.test(mpg ~ am, data = .)
 ```
 
 <div data-iframe-height></div>
+
+Testing some text now...
