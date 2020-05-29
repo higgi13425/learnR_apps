@@ -33,5 +33,3 @@ mtcars %>%
 ```
 
 <div data-iframe-height></div>
-
-Testing some text now...
