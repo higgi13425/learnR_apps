@@ -1,0 +1,94 @@
+---
+title: "Dplyr Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(medicaldata)
+library(santoku)
+prostate <- medicaldata::blood_storage
+```
+
+
+## Data Wrangling
+
+### Exercise 
+
+Edit the code below to <br>
+
+- filter the prostate data by PreopPSA >5
+- filter for PVol >50 cc
+- select TVol, T.Stage, AA, TimeToRecurrence
+- group_by AA
+- summarize the mean_tvol, mean_tstage, and mean_time
+
+<br><br>
+It is **strongly encouraged** to <br>
+
+- google dplyr functions
+- phone a friend
+- share screens
+- ask questions
+
+
+```{r wrangle_prostate, exercise=TRUE, exercise.lines = 10, error=TRUE}
+prostate %>% 
+  filter(---) %>% 
+  filter(---) %>% 
+  select(---) %>% 
+  group_by(---) %>% 
+  summarize(---)
+```
+
+
+```{r wrangle_prostate-hint}
+prostate %>% 
+  filter(PreopPSA >5) %>% 
+  filter(PVol >50) %>% 
+  select(TVol, T.Stage, AA, TimeToRecurrence) %>% 
+  group_by(AA) %>% 
+  summarize(mean_tvol = mean(TVol, na.rm = T),
+            mean_tstage = mean(T.Stage, na.rm = T),
+            mean_time = mean(TimeToRecurrence, na.rm = T))
+```
+
+
+### Recoding with _cut_
+
+Divide Age into a new variable, age_decade, using the {base} function, cut()
+
+```{r decade, exercise=TRUE, exercise.lines = 5, error=TRUE}
+
+prostate %>% 
+  mutate(age_decade = ---) %>% 
+  select(Age, age_decade)
+```
+
+```{r decade-hint}
+
+prostate %>% 
+  mutate(age_decade = cut(Age, breaks = seq(10,100,10))) %>% 
+  select(Age, age_decade)
+```
+
+### Recoding with {santoku} _chop_
+
+Google the R package {santoku}, and the _chop()_ function (with the breaks argument). Use this to create age_decade from the Age variable
+
+```{r chop, exercise=TRUE, exercise.lines = 5, error=TRUE}
+prostate %>% 
+  mutate(age_decade = --- ) %>% 
+  select(Age, age_decade)
+```
+
+
+```{r chop-hint}
+prostate %>% 
+  mutate(age_decade = chop(Age, breaks = c(seq(10,100, 10)))) %>% 
+  select(Age, age_decade)
+```
+
