@@ -118,22 +118,22 @@ $(document).ready(function () {
 
 <div id="section-data-wrangling" class="section level2">
 <h2>Data Wrangling</h2>
+<p>Please note, <br> It is <strong>strongly encouraged</strong> to <br></p>
+<ul>
+<li>google dplyr functions</li>
+<li>phone a friend</li>
+<li>share screens</li>
+<li>ask questions <br></li>
+</ul>
 <div id="section-exercise" class="section level3">
 <h3>Exercise</h3>
-<p>Edit the code below to <br></p>
+<p>Edit the code below to</p>
 <ul>
 <li>filter the prostate data by PreopPSA &gt;5</li>
 <li>filter for PVol &gt;50 cc</li>
 <li>select TVol, T.Stage, AA, TimeToRecurrence</li>
 <li>group_by AA</li>
 <li>summarize the mean_tvol, mean_tstage, and mean_time</li>
-</ul>
-<p><br><br> It is <strong>strongly encouraged</strong> to <br></p>
-<ul>
-<li>google dplyr functions</li>
-<li>phone a friend</li>
-<li>share screens</li>
-<li>ask questions</li>
 </ul>
 <div class="tutorial-exercise" data-label="wrangle_prostate" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="10">
 <pre class="text"><code>prostate %&gt;% 
@@ -157,7 +157,7 @@ $(document).ready(function () {
 </div>
 <div id="section-recoding-with-cut" class="section level3">
 <h3>Recoding with <em>cut</em></h3>
-<p>Divide Age into a new variable, age_decade, using the {base} function, cut()</p>
+<p>Recode the variable Age into a new variable, age_decade, using the {base} function, <em>cut()</em>. Use the <code>breaks</code> argument.</p>
 <div class="tutorial-exercise" data-label="decade" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="5">
 <pre class="text"><code>prostate %&gt;% 
   mutate(age_decade = ---) %&gt;% 
@@ -172,7 +172,7 @@ $(document).ready(function () {
 </div>
 <div id="section-recoding-with-santoku-chop" class="section level3">
 <h3>Recoding with {santoku} <em>chop</em></h3>
-<p>Google the R package {santoku}, and the <em>chop()</em> function (with the breaks argument). Use this to create age_decade from the Age variable</p>
+<p>Google the R package {santoku}, and the <em>chop()</em> function (with the breaks argument). Use this to create age_decade from the Age variable.</p>
 <div class="tutorial-exercise" data-label="chop" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="5">
 <pre class="text"><code>prostate %&gt;% 
   mutate(age_decade = --- ) %&gt;% 

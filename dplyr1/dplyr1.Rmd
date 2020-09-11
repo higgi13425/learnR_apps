@@ -16,23 +16,24 @@ prostate <- medicaldata::blood_storage
 
 ## Data Wrangling
 
-### Exercise 
-
-Edit the code below to <br>
-
-- filter the prostate data by PreopPSA >5
-- filter for PVol >50 cc
-- select TVol, T.Stage, AA, TimeToRecurrence
-- group_by AA
-- summarize the mean_tvol, mean_tstage, and mean_time
-
-<br><br>
+Please note, <br>
 It is **strongly encouraged** to <br>
 
 - google dplyr functions
 - phone a friend
 - share screens
 - ask questions
+<br>
+
+### Exercise 
+
+Edit the code below to  
+
+- filter the prostate data by PreopPSA >5
+- filter for PVol >50 cc
+- select TVol, T.Stage, AA, TimeToRecurrence
+- group_by AA
+- summarize the mean_tvol, mean_tstage, and mean_time
 
 
 ```{r wrangle_prostate, exercise=TRUE, exercise.lines = 10, error=TRUE}
@@ -59,7 +60,7 @@ prostate %>%
 
 ### Recoding with _cut_
 
-Divide Age into a new variable, age_decade, using the {base} function, cut()
+Recode the variable Age into a new variable, age_decade, using the {base} function, _cut()_. Use the `breaks` argument.
 
 ```{r decade, exercise=TRUE, exercise.lines = 5, error=TRUE}
 
@@ -77,7 +78,7 @@ prostate %>%
 
 ### Recoding with {santoku} _chop_
 
-Google the R package {santoku}, and the _chop()_ function (with the breaks argument). Use this to create age_decade from the Age variable
+Google the R package {santoku}, and the _chop()_ function (with the breaks argument). Use this to create age_decade from the Age variable.
 
 ```{r chop, exercise=TRUE, exercise.lines = 5, error=TRUE}
 prostate %>% 
