@@ -1,0 +1,302 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(medicaldata)
+library(dplyr)
+library(santoku)
+blood <- medicaldata::blood_storage
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Mutating
+
+### What does _mutate()_ do?
+
+*the mutate() function creates a new variable (a column) in your dataset, or _can_ over-write an existing variable in your dataset*
+
+run the code below to inspect a few columns from the _blood_ dataset
+
+```{r blood}
+blood %>% 
+  select(Age, AA, FamHx, T.Stage, Recurrence,
+         PVol, TVol) %>% 
+  glimpse()
+```
+You can see that some of the numeric variables (AA, FamHx, T.Stage, Recurrence) should actually be categorical *factor* variables, and one (T.Stage) should be an *ordered factor* (ordinal categorical variable).
+<br>
+You might also want to calculate the ratio of TVol (tumor volume) to PVol (prostate volume) as a new variable, or the ratio of TVol to T.Stage as a new predictor variable.
+<br>
+You can do all of these things with the _mutate()_ function.
+<br>
+<br>
+
+## Data Types
+
+### Example of changing data type
+
+R has a number of *data types*. Each column in a data frame or tibble contains a consistent data type. These data types can be:
+
+- Character (aka string)
+- Numeric (in two flavors)
+  - integer
+  - double (aka real or decimal or float)
+- factor (categorical in two flavors)
+  - unordered
+  - ordered
+- logical (TRUE/FALSE)
+also
+- complex/imaginary numbers - not commonly used
+
+<br>
+<br>
+
+Run the example below to create a new variable tvol_int that is an integer version of TVol, and new variable tvol_d which converts it back to a double.
+
+```{r int}
+blood %>% 
+  mutate(tvol_int = as.integer(TVol),
+         tvol_d = as.numeric(tvol_int)) %>% 
+  select(tvol_int, TVol, tvol_d)
+```
+Note that: <br>
+
+- we created a new variable, and left the old one in place
+  - this helps us check that we did the transformation we expected
+- the tibble format tells us whether each variable's data type - int or dbl here.
+- *base R* includes as_type() functions for each data type.
+- _as_numeric()_ will change an <int> to a <dbl>
+- you can put more than one change in a mutate statement(separated by commas, usually on distinct lines), and generate multiple variables.
+- it is generally *best practice* to mutate new variables, and avoid over-writing your data. This makes it easier to check that you made the correct data transformation.
+
+### Your turn
+
+Modify the following code to create a new variable recur_true, which is a _logical_ version (TRUE/FALSE) of Recurrence, then select recur_true and Recurrence to check that you did this correctly
+
+```{r mutate-2, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(recur_true = ---) %>% 
+  select(---, ---)
+  
+```
+
+```{r mutate-2-hint}
+blood %>% 
+  mutate(recur_true = as.logical(Recurrence)) %>% 
+  select(recur_true, Recurrence)
+```
+
+### Fixing more data types
+
+Modify the following code to create a new factor variables from AA, FamHx, and Recurrence,
+named aa_f, fhx_f, and recur_f.  Select the right variables to check your transformations.
+
+```{r mutate-3, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(aa_f = ---,
+         fhx_f = ---,
+         recur_f = ----) %>% 
+  select()
+  
+```
+
+```{r mutate-3-hint}
+blood %>% 
+  mutate(aa_f = as.factor(AA),
+         fhx_f = as.factor(FamHx),
+         recur_f = as.factor(Recurrence)) %>% 
+  select(ends_with("_f"), AA, FamHx, Recurrence)
+```
+
+### Making an *ordered* factor
+
+Modify the following code to create a new *ordered* factor variable from T.Stage, called tstage_ord. The _order_ should be 1 as the lowest (first) stage, and 2 as the highest (2nd) stage.<br>
+Then select T.Stage and tstage_ord to check your work.<br>
+You can read more about ordered factors at:
+https://www.dummies.com/programming/r/how-to-work-with-ordered-factors-in-r/
+
+
+```{r mutate-4, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(tstage_ord= factor(---,
+         levels = c("--", "--"),
+         ordered = TRUE))  %>% 
+  select()
+  
+```
+
+```{r mutate-4-hint}
+blood %>% 
+  mutate(tstage_ord= factor(T.Stage, 
+         levels = c("1", "2"),
+         ordered = TRUE)) %>% 
+  select(T.Stage, tstage_ord) 
+```
+You can see that tstage_ord is now an _ordered_ categorical factor variable.
+
+
+## Calculations to Make new Variables
+
+You will often have to derive new variables from your raw clinical data. For example, it is common to take weight and height variables and calculate BMI (body mass index), or do other calculations for body surface area (BSA) or mean arterial pressure (MAP). The _mutate()_ function shines for making derived variables.<br>
+<br>
+Let's use the blood dataset, and calculate some derived variables that might be predictors of recurrence of prostate cancer.
+
+### Calculating t_pct
+
+In the example below, calculate the ratio of TVol (tumor volume) to PVol (prostate volume) to produce a new variable t_pct, the percentage of the prostate that is tumor.<br>
+Then select Tvol, PVol, and t_pct to check your transformations.
+
+```{r mutate-5, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(t_pct= 100 * --- / ---)  %>% 
+  select()
+  
+```
+
+```{r mutate-5-hint}
+blood %>% 
+  mutate(t_pct= 100 * TVol / PVol)  %>% 
+  select(TVol, PVol, t_pct)
+```
+
+
+
+
+### Calculating t_ratio
+as a new variable, or the ratio of TVol to T.Stage as a new predictor variable.
+
+In the example below, calculate the ratio of TVol (tumor volume) to T.Stage (tumor stage) to produce a new variable t_ratio, the ratio of volume to stage.<br>
+Then select Tvol, T.Stage, and t_ratio to check your transformations.
+
+```{r mutate-5b, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(--- =  --- / ---)  %>% 
+  ---()
+  
+```
+
+```{r mutate-5b-hint}
+blood %>% 
+  mutate(t_ratio = TVol / T.Stage)  %>% 
+  select(TVol, T.Stage, t_ratio)
+```
+
+## Chunking Continuous Data
+
+While is is a statistically bad idea, it is not uncommon to cut continuous variables into ordered factors to help interpretability. <br>
+This approach is going to cost you power in any statistical test, and is often derided in clinical outcomes publications as "dichotomania".<br>
+
+But when you are just categorizing data (i.e. for Table 1), this can be helpful. The _cut()_ function or the  _mutate(case_when())_ construction can be helpful.
+
+You can cut TimeToRecurrence into four quartiles, using the lowest value, 25th, 50th, 75th percentiles, and the highest value as breaks, as seen in the example below
+
+```{r cut}
+blood %>% 
+  mutate(recur2 = cut(TimeToRecurrence, 
+          breaks = c(0, 7.6, 25.3, 52, 105),
+          ordered_result = TRUE,
+          include.lowest = TRUE,
+          labels = c('q1', 'q2', 'q3', 'q4'))) %>% 
+  select(recur2, TimeToRecurrence)
+```
+
+### Cutting Age by Decade
+Use this approach to mutate a new variable called age_dec that breaks age into decades. Note that the range of blood$Age is `r range(blood$Age)`
+
+In the example below, use mutate and cut to break blood$Age into the new variable age_dec.
+Then select and compare columns to check your work.
+
+You can learn more about the _cut()_ function here: 
+https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut
+
+```{r mutate-6, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(age_dec =cut(---, 
+          breaks = c(),
+          ordered_result = TRUE,
+          include.lowest = TRUE,
+          labels = c('30s', '40s', '50s', '60s', '70s'))) %>% 
+  select()
+  
+```
+
+```{r mutate-6-hint}
+blood %>% 
+  mutate(age_dec =cut(Age, 
+          breaks = c(30, 40,50,60,70, 80),
+          ordered_result = TRUE,
+          include.lowest = TRUE,
+          labels = c('30s', '40s', '50s', '60s', '70s'))) %>% 
+  select(age_dec, Age)
+```
+
+### Cutting PVol into Low, Medium, High
+
+Now try to cut PVol into a new variable called prost_size with labels of small, medium, and large.
+Use the {santoku} package function _chop_quantiles_ with quantiles of 0.33 and 0.66.
+
+You can find more about {santoku} here:  https://hughjonesd.github.io/santoku/index.html
+
+```{r mutate-7, exercise=TRUE, error = TRUE, lines= 5}
+blood %>% 
+  mutate(prost_size = chop_quantiles(--, 
+      c(--, --),
+  lbl_manual(c("small", "medium", "large")))) %>% 
+  select(prost_size, PVol)
+  
+```
+
+```{r mutate-7-hint}
+blood %>% 
+  mutate(prost_size = chop_quantiles(PVol, 
+      c(0.33, 0.66),
+  lbl_manual(c("small", "medium", "large")))) %>% 
+  select(prost_size, PVol)
+```
+
+## The Magic of _across()_
+
+You can modify multiple columns in the same way with the _across()_ function. This function can be used to select multiple columns for mutating or summarizing (or even pivoting).
+
+### An Example for Factors
+
+You can use across() to mutate multiple numeric variables to factors in one mutate function.
+
+the _across()_ function has 3 main arguments and one supplementary argument
+
+- .cols (columns)
+- .fns (functions to apply)
+- ... to add additional arguments to functions (like na.rm = TRUE)
+- .names (output names)
+
+```{r across}
+blood %>% 
+  mutate(across(.cols = c(AA, FamHx, TVol, T.Stage),
+  .fns = as.factor,
+  .names = '{col}_f')) %>% 
+  select(ends_with('_f'))
+```
+
+### An Example for Means 
+
+You can use across() to summarize multiple numeric variables to their means and medians in one mutate function.
+
+the _across()_ function has 3 main arguments
+
+- .cols (columns)
+- .fns (functions to apply)
+- .names (output names)
+
+```{r across2}
+blood %>% 
+  group_by(AA) %>% 
+  summarize(across(where(is.numeric),
+  list(mean), 
+  na.rm =TRUE))
+```
+

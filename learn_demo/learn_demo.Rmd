@@ -1,0 +1,53 @@
+---
+title: "Demo {learnr} Exercise"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% clean_names() %>% as_tibble()
+```
+
+
+### Exercise 1: Selecting Columns (Variables)
+
+Write the R code required to add select the variables age (age), family history (fam_hx), and tumor stage (t_stage) from the prostate cancer (prostate) dataset:
+
+```{r select1, exercise=TRUE, error=TRUE}
+prostate %>% 
+  select(---,---,---)
+```
+
+```{r select1-hint, error=TRUE}
+prostate %>% 
+  select(age,---,---)
+```
+
+```{r select1-solution}
+prostate %>% 
+  select(age, fam_hx, t_stage)
+```
+
+### Exercise 2: Selecting Columns (Variables)
+
+Write the R code required to add select the baseline Gleason Score and the surgical Gleason score from the prostate dataset. These are variables that end in gs (for Gleason Score), so we can use the **ends_with** selection helper within the _select_ function. This is a harder example, so use the Hints button prn.
+
+```{r select2, exercise=TRUE, error=TRUE}
+prostate %>% 
+  select(--("--"))
+```
+
+```{r select2-hint, error=TRUE}
+prostate %>% 
+  select(ends_with("--"))
+```
+
+```{r select2-solution}
+prostate %>% 
+  select(ends_with("gs"))
+```

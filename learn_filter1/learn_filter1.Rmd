@@ -1,0 +1,106 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% 
+  clean_names() %>% as_tibble()
+```
+
+
+## Filtering Numeric Variables
+
+We will start with the prostate dataset, seen here:
+
+```{r echo=FALSE}
+glimpse(prostate)
+```
+
+### Exercise 1
+
+Write the R code required to filter the prostate dataset to rows with a prostate volume (p_vol) greater than or equal to 90:
+
+```{r p_vol, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  filter(-- >= --)
+```
+
+```{r p_vol-hint}
+prostate %>% 
+  filter(p_vol >= 90)
+
+```
+
+### Exercise 2
+
+Write the R code required to filter the prostate dataset to rows with a family history (fam_hx) of prostate cancer.
+
+**Watch** the number of == signs
+
+```{r fam_hx, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(age, t_vol, fam_hx) %>% 
+  filter(fam_hx --)
+```
+
+```{r fam_hx-hint}
+prostate %>% 
+  select(age, t_vol, fam_hx) %>% 
+  filter(fam_hx == 1)
+
+```
+
+### Exercise 3
+
+Write the R code required to filter the prostate dataset to rows with a preoperative psa (preop_psa) near 12 (within 1).
+
+
+```{r psa, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(age, aa, preop_psa) %>% 
+  filter(preop_psa)
+```
+
+```{r psa-hint}
+prostate %>% 
+  select(age, aa, preop_psa) %>% 
+  filter(near(preop_psa, 12, tol = 1))
+```
+
+### Exercise 4
+
+Write the R code required to filter the prostate dataset to rows with ages with values of 60 or 63 or 69.
+
+```{r in, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(age, preop_psa, fam_hx) %>% 
+  filter()
+```
+
+```{r in-hint}
+prostate %>% 
+  select(age, preop_psa, fam_hx) %>% 
+  filter(age %in% c(60, 63, 69))
+```
+
+### Exercise 5
+
+Write the R code required to filter the prostate dataset to rows with preop_psa between 9 and 11.
+
+```{r btwn, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(age, preop_psa, fam_hx) %>% 
+  filter()
+```
+
+```{r btwn-hint}
+prostate %>% 
+  select(age, preop_psa, fam_hx) %>% 
+  filter(between(preop_psa, 9,11))
