@@ -125,7 +125,7 @@ $(document).ready(function () {
 <div class="tutorial-exercise" data-label="ex1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>covid_dates %&gt;% 
   select(subject_id, fake_date) %&gt;%
-  filter(--- )</code></pre>
+  filter(---)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"R code"}</script>
 </div>
 <div class="tutorial-exercise-support" data-label="ex1-hint" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
@@ -303,7 +303,7 @@ output$`tutorial-exercise-ex1-output` <- renderUI({
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache("ex1", list(setup = NULL, chunks = list(list(label = "ex1", code = "covid_dates %>% \n  select(subject_id, fake_date) %>%\n  filter(--- )", 
+learnr:::store_exercise_cache("ex1", list(setup = NULL, chunks = list(list(label = "ex1", code = "covid_dates %>% \n  select(subject_id, fake_date) %>%\n  filter(---)", 
     opts = list(label = "\"ex1\"", exercise = "TRUE", error = "TRUE", 
         lines = "5"), engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = NULL, options = list(eval = FALSE, 
@@ -324,7 +324,7 @@ learnr:::store_exercise_cache("ex1", list(setup = NULL, chunks = list(list(label
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, tutorial = TRUE, label = "ex1", exercise = TRUE, 
         lines = 5, code = c("covid_dates %>% ", "  select(subject_id, fake_date) %>%", 
-        "  filter(--- )"), out.width.px = 624, out.height.px = 384, 
+        "  filter(---)"), out.width.px = 624, out.height.px = 384, 
         params.src = "ex1, exercise=TRUE, error=TRUE, lines = 5", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r"))
@@ -343,10 +343,10 @@ learnr:::store_exercise_cache("ex2", list(setup = NULL, chunks = list(list(label
         lines = "5"), engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("covid_dates %>% ", 
     "  select(subject_id, fake_date) %>%", "  filter(between(fake_date, ymd(\"2020-03-10\"), ymd(\"2020-03-17\"))) %>% ", 
-    "  arrange(fake_date)"), chunk_opts = list(label = "ex2-solution")), 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, strip.white = TRUE, 
+    "  arrange(fake_date)"), chunk_opts = list(label = "ex2-solution", 
+        error = TRUE)), options = list(eval = FALSE, echo = TRUE, 
+        results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
+        prompt = FALSE, comment = NA, highlight = FALSE, strip.white = TRUE, 
         size = "normalsize", background = "#F7F7F7", cache = 0, 
         cache.path = "learn_filter4_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
@@ -381,14 +381,15 @@ learnr:::store_exercise_cache("ex3", list(setup = NULL, chunks = list(list(label
         lines = "5"), engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("bmt_dates %>% ", "  select(id, fake_agvhd_date) %>%", 
     "  filter(fake_agvhd_date >", "           ymd(\"2020-06-30\") - years(2))"
-    ), chunk_opts = list(label = "ex3-solution")), options = list(
-        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
-        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
-        highlight = FALSE, strip.white = TRUE, size = "normalsize", 
-        background = "#F7F7F7", cache = 0, cache.path = "learn_filter4_cache/html/", 
-        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
-        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
-        fig.show = "asis", fig.align = "default", fig.path = "learn_filter4_files/figure-html/", 
+    ), chunk_opts = list(label = "ex3-solution", error = TRUE)), 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, strip.white = TRUE, 
+        size = "normalsize", background = "#F7F7F7", cache = 0, 
+        cache.path = "learn_filter4_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "learn_filter4_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -453,10 +454,10 @@ learnr:::store_exercise_cache("ex5", list(setup = NULL, chunks = list(list(label
         lines = "5"), engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("bmt_dates %>% ", "  select(id, fake_bmt_date) %>% ", 
     "  filter(between(fake_bmt_date, ymd(\"2017-01-01\"), ymd(\"2020-12-31\"))) %>% ", 
-    "  arrange(fake_bmt_date)"), chunk_opts = list(label = "ex5-solution")), 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, strip.white = TRUE, 
+    "  arrange(fake_bmt_date)"), chunk_opts = list(label = "ex5-solution", 
+        error = TRUE)), options = list(eval = FALSE, echo = TRUE, 
+        results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
+        prompt = FALSE, comment = NA, highlight = FALSE, strip.white = TRUE, 
         size = "normalsize", background = "#F7F7F7", cache = 0, 
         cache.path = "learn_filter4_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 

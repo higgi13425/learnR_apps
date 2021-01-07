@@ -31,10 +31,10 @@ Write the R code required to filter the covid_dates dataset to rows with a fake_
 ```{r ex1, exercise=TRUE, error=TRUE, lines = 5}
 covid_dates %>% 
   select(subject_id, fake_date) %>%
-  filter(--- )
+  filter(---)
 ```
 
-```{r ex1-hint}
+```{r ex1-hint, error=TRUE}
 covid_dates %>% 
   select(subject_id, fake_date) %>%
   filter(fake_date == ymd("2020-04-07"))
@@ -50,21 +50,21 @@ covid_dates %>%
   filter(---)
 ```
 
-```{r ex2-hint-1}
+```{r ex2-hint-1, error=TRUE}
 covid_dates %>% 
   select(subject_id, fake_date) %>%
   filter(between(fake_date, ---, ---)) %>% 
   arrange(fake_date)
 ```
 
-```{r ex2-hint-2}
+```{r ex2-hint-2, error=TRUE}
 covid_dates %>% 
   select(subject_id, fake_date) %>%
   filter(between(fake_date, ymd(---), ymd(---))) %>% 
   arrange(fake_date)
 ```
 
-```{r ex2-solution}
+```{r ex2-solution, error=TRUE}
 covid_dates %>% 
   select(subject_id, fake_date) %>%
   filter(between(fake_date, ymd("2020-03-10"), ymd("2020-03-17"))) %>% 
@@ -89,7 +89,7 @@ bmt_dates %>%
            today() -   ---)
 ```
 
-```{r ex3-solution}
+```{r ex3-solution, error=TRUE}
 bmt_dates %>% 
   select(id, fake_agvhd_date) %>%
   filter(fake_agvhd_date >
@@ -107,7 +107,7 @@ bmt_dates %>%
   filter(---)
 ```
 
-```{r ex4-hint}
+```{r ex4-hint, error=TRUE}
 bmt_dates %>% 
   select(id, fake_bmt_date) %>% 
   filter(wday(fake_bmt_date) == 4) 
@@ -132,7 +132,7 @@ bmt_dates %>%
   arrange(fake_bmt_date)
 ```
 
-```{r ex5-solution}
+```{r ex5-solution, error=TRUE}
 bmt_dates %>% 
   select(id, fake_bmt_date) %>% 
   filter(between(fake_bmt_date, ymd("2017-01-01"), ymd("2020-12-31"))) %>% 
