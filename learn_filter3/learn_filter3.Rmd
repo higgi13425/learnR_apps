@@ -1,8 +1,9 @@
 ---
-title: "Filtering 3"
+title: "Tutorial"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
+
 
 ```{r setup, include=FALSE}
 library(learnr)
@@ -16,7 +17,7 @@ covid <- medicaldata::covid_testing
 ```
 
 
-## Filtering Strings With Exact Matching
+## Filtering Strings
 
 We will start with the covid dataset, and combine multiple logical statements to filteR our Rows.
 
@@ -51,7 +52,6 @@ covid %>%
 covid %>% 
   select(subject_id, patient_class, payor_group) %>% 
   filter(payor_group == "government")
-
 ```
 
 ### Exercise 3
