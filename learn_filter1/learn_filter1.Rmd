@@ -9,6 +9,7 @@ library(learnr)
 library(tidyverse)
 library(medicaldata)
 library(janitor)
+library(gradethis)
 knitr::opts_chunk$set(echo = FALSE)
 prostate <- medicaldata::blood_storage %>% 
   clean_names() %>% as_tibble()
@@ -35,7 +36,6 @@ prostate %>%
 ```{r p_vol-hint}
 prostate %>% 
   filter(p_vol >= 90)
-
 ```
 
 ### Exercise 2
