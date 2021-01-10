@@ -1,0 +1,93 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+ 
+knitr::opts_chunk$set(echo = FALSE)
+raa <- medicaldata::raa %>% clean_names() %>% as_tibble()
+raa_extra <- slice(raa, 37:45)
+raa <- bind_rows(raa, raa_extra)
+
+prostate <-medicaldata::blood_storage %>% clean_names() %>% as_tibble() 
+prostate_extra <- slice(prostate, 15:22)
+prostate <- bind_rows(prostate, prostate_extra)
+```
+
+## The Problem of Duplicate Data
+
+Sometimes you get get duplicate entries of the same observation, either from data entry errors, or from errors in merging data from different sources, or from data queries on different days. It is important to identify and remove these duplicates before you do your analysis. The *distinct()* function will tell you how many distinct rows you have, and the *get_dupes()* function from the {janitor} package will help you identify the duplicates for fixing.
+
+### Exercise 1
+
+The example below counts the number of rows in a version of the prostate dataset which has some duplicate rows. Add the R code required to count the number of distinct rows.
+
+```{r ex1, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  nrow()
+
+prostate %>% 
+  ---()
+```
+
+```{r ex1-hint, error=TRUE}
+prostate %>% 
+  nrow()
+
+prostate %>% 
+  distinct()
+```
+
+### Exercise 2
+
+Write the R code required to find the duplicate rows in the prostate dataset.
+
+```{r ex2, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  ---()
+```
+
+```{r ex2-solution, error=TRUE}
+prostate %>% 
+  get_dupes()
+```
+
+### Exercise 3
+
+This version of the raa dataset has some duplicate rows. Add the R code required to count the number of distinct rows.
+
+```{r ex3, exercise=TRUE, error=TRUE, lines = 5}
+raa %>% 
+  nrow()
+
+raa %>% 
+  ---()
+```
+
+```{r ex3-solution, error=TRUE}
+raa %>% 
+  nrow()
+
+raa %>% 
+  distinct()
+```
+
+### Exercise 4
+
+rite the R code required to find the duplicate rows in the raa dataset.
+
+```{r ex4, exercise=TRUE, error=TRUE, lines = 5}
+raa %>% 
+  ----()
+```
+
+```{r ex4-hint, error=TRUE}
+raa %>% 
+  get_dupes()
+```
