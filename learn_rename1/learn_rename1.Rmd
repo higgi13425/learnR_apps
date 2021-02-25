@@ -1,0 +1,101 @@
+---
+title: "Renaming Variables"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+library(gradethis)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% 
+  clean_names() %>% as_tibble()
+covid <- medicaldata::covid_testing %>% clean_names() %>%  as.tibble()
+laryngoscope <- medicaldata::laryngoscope %>% clean_names() %>%  as.tibble()
+licorice <- medicaldata::licorice_gargle %>% clean_names() %>%  as.tibble()
+```
+
+
+## Renaming Variables in a dataset
+
+We will start with the prostate dataset, seen here with `glimpse()`:
+
+```{r , echo=TRUE}
+glimpse(prostate)
+```
+
+### Exercise 1
+
+Write the R code required to rename the variable fam_hx to fhx. Remember (new_name = old_name) syntax.
+
+```{r rename1, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  rename(--- = ---)
+```
+
+```{r rename1-hint}
+prostate %>% 
+  rename(fhx = fam_hx)
+```
+
+### Exercise 2
+
+Write the R code required to rename all of the variables that start with "preop" by replacing "preop" with "PRE", using `replace_with()`, and the `str_replace()` function 
+
+```{r str, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  rename_with(--- , ---)
+```
+
+```{r str-hint}
+prostate %>% 
+  rename_with(--- , ---)
+
+```
+
+```{r str-solution}
+prostate %>% 
+  rename_with(~str_replace(., "preop", "PRE_"),
+              starts_with("preop"))
+
+```
+
+### Exercise 3
+
+Write the R code required to rsystematically rename all of the variables in the blood storage dataset to upper case with the `toupper()` function.
+
+```{r upper, exercise=TRUE, error=TRUE, lines = 5}
+medicaldata::blood_storage%>% 
+  rename_with(--- , ---)
+```
+
+```{r upper-hint}
+medicaldata::blood_storage%>% 
+  rename_with(~ ---(.), ---())
+
+```
+
+```{r upper-solution}
+medicaldata::blood_storage%>% 
+  rename_with(~ toupper(.), everything())
+
+```
+
+### Exercise 4
+
+Write the R code required to rsystematically rename all of the variables in the blood storage dataset to lower_snake_case with `janitor::clean_names()`
+
+```{r clean, exercise=TRUE, error=TRUE, lines = 5}
+medicaldata::blood_storage%>% 
+  janitor::---()
+```
+
+```{r clean-hint}
+medicaldata::blood_storage%>% 
+  janitor::clean_names()
+
+```
+

@@ -1,0 +1,173 @@
+---
+title: "Counting and Tallying Variables"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+library(gradethis)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% 
+  clean_names() %>% as_tibble()
+covid <- medicaldata::covid_testing %>% clean_names() %>%  as.tibble()
+laryngoscope <- medicaldata::laryngoscope %>% clean_names() %>%  as.tibble()
+licorice <- medicaldata::licorice_gargle %>% clean_names() %>%  as.tibble()
+```
+
+
+## Counts and Tallies of Variables in a dataset
+
+Sometimes it is convenient to to have a total `tally()` (denominator) of your dataset, or by current groups. This helps in calculating proportions or percentages. You can also perform `counts` by groups and subgroups. The simplest way to count is with the `n()` function, which counts the observations and places the result in a vector named (by default) "n".
+
+We will start with the laryngoscope dataset, seen here with `glimpse()`:
+
+```{r , echo=TRUE}
+glimpse(laryngoscope)
+```
+
+### Exercise 1
+
+Write the R code required to tally the total number of observations with the`tally()` function, and name the new variable "observations".
+
+```{r tally, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  ---(name = "---")
+```
+
+```{r tally-hint}
+laryngoscope %>% 
+  tally(name = "observations")
+```
+
+### Exercise 2
+
+If your data are currently grouped, `tally()` will count observations by group.
+
+Write the R code required to (1) `group_by()` ASA class ("asa"), then (2) tally the total number of observations in each group with the`tally()` function, and name the new variable "obs".
+
+```{r tally2, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  ---(asa) %>% 
+  ---(name = ---)
+  
+```
+
+```{r tally2-hint}
+laryngoscope %>% 
+  group_by(asa) %>% 
+  ---(name = ---)
+
+```
+
+```{r tally2-solution}
+laryngoscope %>% 
+  group_by(asa) %>% 
+  tally(name = "obs")
+
+```
+
+### Exercise 3
+
+You can do the grouping and counting in one function with `count()`, which will also ungroup after counting, so as not to change any previous grouping.
+
+Write the R code required to (1) `group_by()` gender, then (2) count the total number of observations in each group with the`count()` function.
+
+```{r count1, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  count(---)
+```
+
+```{r count1-hint}
+laryngoscope %>% 
+  count(gender)
+```
+
+### Exercise 4
+
+Write the R code required to count the total number of observations in each group of asa and gender with the`count()` function, then sort them in descending order, and name the count variable "n_per_group".
+
+```{r count2, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  count(---, ---, sort = ___, name = ___)
+```
+
+```{r count2-hint, error=TRUE, lines = 5}
+laryngoscope %>% 
+  count(asa, gender, sort = ___, name = ___)
+```
+
+```{r count2-solution}
+laryngoscope %>% 
+  count(asa, gender, sort = TRUE, name = "n_per_group")
+
+
+```
+
+
+### Exercise 5
+
+Write the R code required to (1) add a "total_obs" column with the total number of observations in the study, and (2) add a "group_count" variable for each each combination of asa and gender, then (3) select asa, gender, group_count, and total_obs.
+
+```{r count3, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  add_tally(name = "---") %>% 
+  add_count(--, --, -- = "---") %>% 
+  select(---)
+```
+
+```{r count3-hint, error=TRUE, lines = 5}
+laryngoscope %>% 
+  add_tally(name = "---") %>% 
+  add_count(asa, gender, name = "---") %>% 
+  select(asa, gender, group_count, total_obs)
+```
+
+```{r count3-solution}
+laryngoscope %>% 
+  add_tally(name = "total_obs") %>% 
+  add_count(asa, gender, name = "group_count") %>% 
+  select(asa, gender, group_count, total_obs)
+```
+
+### Exercise 6
+
+At times you just want a sense of how many values are in a particular character or factor variable. This is where the `janitor::tabyl()` function shines.
+Write the R code required to count the number of distinct categories in the covid dataset variable, payor_group.
+
+```{r tabyl1, exercise=TRUE, error=TRUE, lines = 5}
+covid %>% 
+  janitor::tabyl(---)
+```
+
+```{r tabyl1-hint, error=TRUE, lines = 5}
+covid %>% 
+  tabyl(---))
+```
+
+```{r tabyl1-solution}
+covid %>% 
+  tabyl(payor_group)
+```
+
+### Exercise 5
+
+Write the R code required to count the number of observations by group in an R x C table in the covid dataset using the variables payor_group and gender.
+
+```{r tabyl2, exercise=TRUE, error=TRUE, lines = 5}
+covid %>% 
+  ---(---, ---)
+```
+
+```{r tabyl2-hint, error=TRUE, lines = 5}
+covid %>% 
+  tabyl(---, ---)
+```
+
+```{r tabyl2-solution}
+covid %>% 
+  tabyl(payor_group, gender)
+```

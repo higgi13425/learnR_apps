@@ -1,0 +1,158 @@
+---
+title: "Selecting Variables"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+library(gradethis)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% 
+  clean_names() %>% as_tibble()
+covid <- medicaldata::covid_testing %>% clean_names() %>%  as.tibble()
+laryngoscope <- medicaldata::laryngoscope %>% clean_names() %>%  as.tibble()
+licorice <- medicaldata::licorice_gargle %>% clean_names() %>%  as.tibble()
+```
+
+
+## Selecting Variables in a dataset
+
+We will start with the prostate dataset, seen here with `glimpse()`:
+
+```{r , echo=TRUE}
+glimpse(prostate)
+```
+
+### Exercise 1
+
+Write the R code required to select the columns with participant attributes (age, aa, fam_hx) to produce a 3 column dataset.
+
+```{r participant, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(---)
+```
+
+```{r participant-hint}
+prostate %>% 
+  select(age, aa, fam_hx)
+```
+
+### Exercise 2
+
+Write the R code required to select the variables that contain "recurrence" in the variable name
+
+**Watch** the number of == signs
+
+```{r recur, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(---)
+```
+
+```{r recur-hint}
+prostate %>% 
+  select(contains("text"))
+
+```
+
+```{r recur-solution}
+prostate %>% 
+  select(contains("recurrence"))
+
+```
+### Exercise 3
+
+Write the R code required to select all the columns from p_vol to the last column in the prostate dataset (skipping over the first 5).
+
+
+```{r last, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(---)
+```
+
+```{r last-hint}
+prostate %>% 
+  select(p_vol:last_col()) 
+```
+
+### Exercise 4
+
+Write the R code required to select the variable age, and all of the variables that start with preop.
+```{r in, exercise=TRUE, error=TRUE, lines = 5}
+prostate %>% 
+  select(---)
+```
+
+```{r in-hint}
+prostate %>% 
+  select(age, starts_with("preop"))
+```
+
+### Exercise 5
+
+Take a look at the licorice gargle data, seen here with `glimpse()`
+
+```{r , echo=TRUE}
+glimpse(licorice)
+```
+Write the R code required to select all the variables that end with pain or cough.
+
+```{r licorice, exercise=TRUE, error=TRUE, lines = 5}
+licorice %>% 
+  select(---)
+```
+
+```{r licorice-hint}
+licorice %>% 
+  select(ends_with(c("pain", "cough")))
+```
+
+### Exercise 6
+
+Write the R code required to select all the variables that match the pattern pacu-digit in 0-9-0.
+
+```{r match, exercise=TRUE, error=TRUE, lines = 5}
+licorice %>% 
+  select(---)
+```
+
+```{r match-hint}
+licorice %>% 
+  select(matches("pacu[---]0"))
+```
+
+```{r match-solution}
+licorice %>% 
+  select(matches("pacu[0-9]0"))
+```
+
+Note that [3,9] would also work for this one.
+
+
+### Exercise 7
+
+Take a look at the covid testing data, seen here with `glimpse()`
+
+```{r covid-glimpse, echo=TRUE}
+glimpse(covid)
+```
+
+Write the R code required to select only the character variables which also contain the word "name" in the covid dataset.
+
+```{r covid, exercise=TRUE, error=TRUE, lines = 5}
+covid %>% 
+  select(---)
+```
+
+```{r covid-hint}
+covid %>% 
+  select(where(-- & --))
+```
+
+```{r covid-solution}
+covid %>% 
+  select(where(is.character) & contains("name"))
+```
