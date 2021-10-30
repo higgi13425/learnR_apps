@@ -1,0 +1,169 @@
+---
+title: "Using Scales to Customize Plots"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+library(scales)
+library(nycflights13)
+knitr::opts_chunk$set(echo = FALSE)
+prostate <- medicaldata::blood_storage %>% 
+  clean_names() %>% as_tibble()
+covid <- medicaldata::covid_testing %>% clean_names() %>%  as.tibble()
+laryngoscope <- medicaldata::laryngoscope %>% clean_names() %>%  as.tibble()
+licorice <- medicaldata::licorice_gargle %>% clean_names() %>%  as.tibble()
+```
+
+
+## Customizing X and Y axes
+
+### Exercise 1
+
+The R code below will plot the bmi (x axis) against the total_intubation_time (y axis) as a scatterplot.
+Your challenge:
+- Make the Y axis start at exactly 0 (turn off multiplicative expansion) and end at 105
+- make the X axis breaks at every 5 units of BMI from 30 to 65
+
+```{r axes, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  ggplot(aes(x= bmi, y = total_intubation_time)) + 
+  geom_point()
+```
+
+```{r axes-hint, error=TRUE}
+laryngoscope %>% 
+  ggplot(aes(x= bmi, y = total_intubation_time)) + 
+  geom_point() +
+  scale_y_continuous(limits = ---,
+                     expand = ---) +
+  scale_x_continuous(breaks = seq(---))
+```
+
+```{r axes-solution}
+laryngoscope %>% 
+  ggplot(aes(x= bmi, y = total_intubation_time)) + 
+  geom_point() +
+  scale_y_continuous(limits = c(0,105),
+        expand = expansion(mult = 0)) +
+  scale_x_continuous(breaks = seq(from = 30, to = 65, by=5))
+```
+### Exercise 2
+
+You can use the `expand` argument to control the margins of a plot. These can be expanded additively or multiplicatively. The default for discrete scales is to add 0.6 of a category on each side. The default for continuous scales is to multiply by 5% of the range on each side.
+
+In this exercise, try to
+- Make more room at the top for the legend (multiply by 20% of y on top only - leave bottom at 5%)
+- rename the legend title to "View Achieved"
+
+
+```{r scale2, exercise=TRUE, error=TRUE, lines = 5}
+laryngoscope %>% 
+  ggplot(aes(x= asa, y = total_intubation_time, color = factor(view))) + 
+  geom_jitter() +
+  theme(legend.position = c(0.5, 0.9)) +
+  scale_color_discrete(guide = guide_legend(nrow = 1))
+  
+```
+
+```{r scale2-hint}
+laryngoscope %>% 
+  ggplot(aes(x= asa, y = total_intubation_time, color = factor(view))) + 
+  geom_jitter() +
+  theme(legend.position = c(0.5, 0.9)) +
+  scale_color_discrete(guide = guide_legend(nrow = 1),
+    name = ---) +
+  scale_y_continuous(expand = expansion(add = c(--,--)))
+
+```
+
+```{r scale2-solution}
+laryngoscope %>% 
+  ggplot(aes(x= asa, y = total_intubation_time, color = factor(view))) + 
+  geom_jitter() +
+  theme(legend.position = c(0.5, 0.9)) +
+  scale_color_discrete(guide = guide_legend(nrow = 1),
+    name = "View Achieved") +
+  scale_y_continuous(expand = expansion(mult = c(0.05,0.2)))
+
+```
+
+### Exercise 3
+
+You can customize the appearance of dates on scales, with `scale_(x|y)_date()` functions.
+
+The code below will plot the average NYC flight delay by date in 2013. Your challenge is to:
+- Set the x axis breaks to monthly
+- format the labels to abbreviated month and 2-digit year, with a 2-line format, using `\n`
+
+```{r scale3, exercise=TRUE, error=TRUE, lines = 5}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() +
+  scale_x_date(---)
+```
+
+```{r scale3-hint}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() +
+  scale_x_date(date_breaks = "---",
+               date_labels = "---")
+```
+
+```{r scale3-solution}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%b\n%y")
+```
+### Exercise 4
+
+Edit the R code below to format the previous plot with breaks every 4 weeks, with labels using the digit week of the year (starting on Sunday).
+
+```{r scale4, exercise=TRUE, error=TRUE, lines = 5}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() 
+```
+
+```{r scale4-hint, error=TRUE, lines = 5}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() +
+  scale_x_date(date_breaks = "--",
+               date_labels = "--")
+```
+
+```{r scale4-solution}
+nycflights13::flights %>% 
+  mutate(date= lubridate::dmy(paste(day, month, year, sep = "-"))) %>% 
+  group_by(date) %>% 
+  summarize(mean_delay_min = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = date, y = mean_delay_min)) +
+  geom_point() +
+  scale_x_date(date_breaks = "4 week",
+               date_labels = "%U")
+```
+
+
